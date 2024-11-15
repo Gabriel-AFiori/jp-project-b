@@ -1,11 +1,14 @@
 const express = require('express');
 const multer = require('multer');
+const cors = require('cors');
 const { neon } = require('@neondatabase/serverless');
 const dotenv = require('dotenv');
 
 dotenv.config();
 
 const app = express();
+app.use(cors());
+
 const upload = multer({ dest: 'uploads/' });
 const sql = neon(process.env.DATABASE_URL);
 
