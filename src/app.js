@@ -4,6 +4,7 @@ const cors = require('cors');
 const bodyParser = require('body-parser');
 const userRoutes = require('./routes/userRoutes');
 const fileRoutes = require('./routes/fileRoutes');
+const errorMiddleware = require('./middlewares/errorMiddleware');
 
 dotenv.config();
 
@@ -16,6 +17,7 @@ app.use('/user', userRoutes);
 app.use('/upload', fileRoutes);
 
 // Adicionar um Middleware para tratamento de erros
+app.use(errorMiddleware);
 
 app.listen(3001, () => {
   console.log('Server running on port 3001');
