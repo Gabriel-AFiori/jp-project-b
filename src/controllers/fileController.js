@@ -1,18 +1,9 @@
-const express = require('express');
+const sql = require('../config/db');  // Importando a instância do banco de dados
+
 const multer = require('multer');
-const cors = require('cors');
-const { neon } = require('@neondatabase/serverless');
-const dotenv = require('dotenv');
-
-dotenv.config();
-
-const app = express();
-app.use(cors());
-
 const upload = multer({ dest: 'uploads/' });
-const sql = neon(process.env.DATABASE_URL);
 
-app.post('/upload', upload.single('file'), async (req, res) => {
+async function uploadFile(req, res) {
   if (!req.file) {
     return res.status(400).send('No file uploaded.');
   }
@@ -39,9 +30,6 @@ app.post('/upload', upload.single('file'), async (req, res) => {
     console.error(error);
     return res.status(500).send('Error saving file to database');
   }
-});
+}
 
-// Iniciando servidor (fazer um server.js para isso? boa pratica?)
-app.listen(3001, () => {
-  console.log('Server running on port 3001');
-});
+module.exports = { uploadFile, upload };
