@@ -14,13 +14,13 @@ const corsOptions = {
   credentials: true,
 };
 
+app.use(cors(corsOptions));
+app.options('*', cors(corsOptions));
+
 dotenv.config();
 
 const app = express();
-app.use(cors(corsOptions));
 app.use(bodyParser.json());
-
-app.options('*', cors(corsOptions));
 
 // Usar as rotas
 app.use('/user', userRoutes);
