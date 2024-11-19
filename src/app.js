@@ -10,17 +10,12 @@ dotenv.config();
 
 const app = express();
 
-// const PORT = process.env.PORT || 3001;
-
-const corsOptions = {
-  origin: ['http://localhost:5173', 'https://jp-project-b.vercel.app'],
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization'],
-  credentials: true,
-};
-
-app.use(cors(corsOptions));
-app.options('*', cors(corsOptions));
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', 'https://jp-project-f.vercel.app'); // Permite apenas esse domínio
+  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+  res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+  next();
+});
 
 app.use(bodyParser.json());
 
@@ -30,9 +25,5 @@ app.use('/upload', fileRoutes);
 
 // Adicionar um Middleware para tratamento de erros
 app.use(errorMiddleware);
-
-// app.listen(PORT, () => {
-//   console.log(`Server running on port ${PORT}`);
-// });
 
 module.exports = app;
