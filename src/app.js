@@ -1,11 +1,15 @@
 const dotenv = require('dotenv');
 const express = require('express');
 const cors = require('cors');
-const PORT = process.env.PORT || 3001;
 const bodyParser = require('body-parser');
 const userRoutes = require('./routes/userRoutes');
 const fileRoutes = require('./routes/fileRoutes');
 const errorMiddleware = require('./middlewares/errorMiddleware');
+
+dotenv.config();
+
+const PORT = process.env.PORT || 3001;
+const app = express();
 
 const corsOptions = {
   origin: 'https://jp-project-f.vercel.app',
@@ -17,9 +21,6 @@ const corsOptions = {
 app.use(cors(corsOptions));
 app.options('*', cors(corsOptions));
 
-dotenv.config();
-
-const app = express();
 app.use(bodyParser.json());
 
 // Usar as rotas
