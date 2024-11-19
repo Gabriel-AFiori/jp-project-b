@@ -1,15 +1,23 @@
 const dotenv = require('dotenv');
 const express = require('express');
 const cors = require('cors');
+const PORT = process.env.PORT || 3001;
 const bodyParser = require('body-parser');
 const userRoutes = require('./routes/userRoutes');
 const fileRoutes = require('./routes/fileRoutes');
 const errorMiddleware = require('./middlewares/errorMiddleware');
 
+const corsOptions = {
+  origin: 'https://jp-project-f.vercel.app',
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  credentials: true,
+};
+
 dotenv.config();
 
 const app = express();
-app.use(cors());
+app.use(cors(corsOptions));
 app.use(bodyParser.json());
 
 // Usar as rotas
@@ -19,6 +27,6 @@ app.use('/upload', fileRoutes);
 // Adicionar um Middleware para tratamento de erros
 app.use(errorMiddleware);
 
-app.listen(3001, () => {
-  console.log('Server running on port 3001');
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
 });

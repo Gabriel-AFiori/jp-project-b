@@ -27,8 +27,8 @@ async function transcribeAudio(req, res) {
       audio: { content: audio },
       config: {
         // Pesquisar sobre encondings e sampleRateHertz dinâmicos
-        encoding: 'MP3', // enconding testados (LINEAR16, FLAC, MP3) - MP3 me parece ser o tipo de audio mais comum, devo utilizar este encoding?
-        sampleRateHertz: 44100, // sampleRateHertz testados (8000, 16000, 44100) - Pelo que entendi 44100 combina melhor com MP3, devo utilizar este sampleRateHertz?
+        encoding: 'LINEAR16' | 'MP3', // enconding testados (LINEAR16, FLAC, MP3) - MP3 me parece ser o tipo de audio mais comum, devo utilizar este encoding?
+        sampleRateHertz: 48000, // sampleRateHertz testados (8000, 16000, 44100) - Pelo que entendi 44100 combina melhor com MP3, devo utilizar este sampleRateHertz?
         languageCode: 'pt-BR',
       },
     };
