@@ -11,9 +11,9 @@ dotenv.config();
 const app = express();
 
 app.use(cors({
-  origin: ['https://jp-project-f.vercel.app', 'http://localhost:5173'],
-  methods: ['GET', 'POST', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization', 'multipart/form-data'],
+  origin: '*',
+  methods: '*',
+  allowedHeaders: '*',
 }));
 
 app.use(bodyParser.json());
