@@ -5,11 +5,12 @@ const bodyParser = require('body-parser');
 const userRoutes = require('./routes/userRoutes');
 const fileRoutes = require('./routes/fileRoutes');
 const errorMiddleware = require('./middlewares/errorMiddleware');
-const PORT = process.env.PORT || 3000;
 
 dotenv.config();
 
 const app = express();
+
+const PORT = process.env.PORT || 3000;
 
 app.use(cors({
   origin: '*',
@@ -28,4 +29,5 @@ app.use(errorMiddleware);
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
+  console.log('aplicação rodando');
 });
