@@ -5,6 +5,7 @@ const bodyParser = require('body-parser');
 const userRoutes = require('./routes/userRoutes');
 const fileRoutes = require('./routes/fileRoutes');
 const errorMiddleware = require('./middlewares/errorMiddleware');
+const PORT = process.env.PORT || 3000;
 
 dotenv.config();
 
@@ -25,4 +26,6 @@ app.use('/upload', fileRoutes);
 // Adicionar um Middleware para tratamento de erros
 app.use(errorMiddleware);
 
-module.exports = app;
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
+});
