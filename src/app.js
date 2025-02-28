@@ -4,6 +4,7 @@ const dotenv = require('dotenv');
 const bodyParser = require('body-parser');
 const userRoutes = require('./routes/userRoutes');
 const fileRoutes = require('./routes/fileRoutes');
+const iaRoutes = require('./routes/inteligenceRoutes');
 const errorMiddleware = require('./middlewares/errorMiddleware');
 
 dotenv.config();
@@ -21,6 +22,7 @@ app.use(cors({
 app.use(bodyParser.json());
 
 // Usar as rotas
+app.use('/ia', iaRoutes);
 app.use('/user', userRoutes);
 app.use('/upload', fileRoutes);
 

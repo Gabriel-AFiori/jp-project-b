@@ -9,8 +9,9 @@ async function uploadFile(req, res) {
   }
 
   try {
-    const { originalname, path, mimetype } = req.file;
-    const userId = req.body.userId;
+    const { path, mimetype } = req.file;
+    const { userId, fileName } = req.body;
+    console.log(`userId: ${userId}, fileName: ${fileName}`);
 
     if (!userId) {
       return res.status(400).send('User ID is required.');
@@ -18,7 +19,7 @@ async function uploadFile(req, res) {
 
     const result = await sql`
       INSERT INTO files (user_id, filename, filepath, filetype)
-      VALUES (${userId}, ${originalname}, ${path}, ${mimetype})
+      VALUES (${userId}, ${fileName}, ${path}, ${mimetype})
       RETURNING *;
     `;
 
@@ -32,4 +33,29 @@ async function uploadFile(req, res) {
   }
 }
 
-module.exports = { uploadFile, upload };
+async function getFiles(req, res) {
+  try {
+    const { uid } = req.user;
+    if (!uid) {
+      return res.status(400).send('User ID is required.');
+    }
+    
+    const rows = await sql`
+    SELECT id, filename, filetype, filepath, transcription 
+    FROM files
+    WHERE user_id = ${uid}
+    ORDER BY id DESC;
+    `;
+
+    if (rows.length === 0) {
+      return res.status(404).send('Nenhum arquivo encontrado.');
+    }
+
+    res.status(200).json(rows);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Erro ao buscar arquivos.' });
+  } 
+}
+
+module.exports = { getFiles, uploadFile, upload };
